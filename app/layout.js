@@ -2,7 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import SessionProvider from "@/lib/SessionProvider";
+
 import { getServerSession } from "next-auth";
+
 import Header from "./_components/Header";
 
 const geistSans = localFont({
