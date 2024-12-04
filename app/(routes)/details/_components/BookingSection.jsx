@@ -31,7 +31,6 @@ function BookingSection({ children, business }) {
         address: "",
         houseNo: "",
     });
-    const [orderId, setOrderId] = useState()
 
     const { data } = useSession();
 
