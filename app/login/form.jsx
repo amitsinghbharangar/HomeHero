@@ -2,17 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
     Card,
@@ -25,22 +16,15 @@ import {
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
-const FormSchema = z.object({
-    email: z.string().email({ message: "Invalid email address." }),
-    password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-});
-
 export default function LoginForm() {
     const router = useRouter();
     const { toast } = useToast();
 
-    const form = useForm({
-        resolver: zodResolver(FormSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
-    });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm();
 
     const onSubmit = async (data) => {
         const { email, password } = data;
@@ -82,43 +66,57 @@ export default function LoginForm() {
                 <CardTitle className="text-center text-3xl">Login to HOMEHERO</CardTitle>
             </CardHeader>
             <CardContent>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="px-8 py-4 space-y-5"
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="px-8 py-4 space-y-5"
+                >
+                    <div>
+                        <label className="block text-sm font-medium">Email</label>
+                        <Input
+                            placeholder="youremail@domain.com"
+                            {...register("email", {
+                                required: "Email is required.",
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Invalid email address.",
+                                },
+                            })}
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.email.message}
+                            </p>
+                        )}
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium">Password</label>
+                        <Input
+                            type="password"
+                            placeholder="Password"
+                            {...register("password", {
+                                required: "Password is required.",
+                                minLength: {
+                                    value: 6,
+                                    message:
+                                        "Password must be at least 6 characters.",
+                                },
+                            })}
+                        />
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.password.message}
+                            </p>
+                        )}
+                    </div>
+
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting}
                     >
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="youremail@domain.com" {...field} />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Password" {...field} type="password" />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                        <Button
-                            type="submit"
-                            disabled={form.formState.isSubmitting}
-                        >
-                            {form.formState.isSubmitting ? "Logging in..." : "Login"}
-                        </Button>
-                    </form>
-                </Form>
+                        {isSubmitting ? "Logging in..." : "Login"}
+                    </Button>
+                </form>
             </CardContent>
             <CardFooter>
                 <CardDescription className="flex justify-center w-full gap-x-1">

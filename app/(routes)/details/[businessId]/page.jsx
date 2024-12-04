@@ -1,5 +1,4 @@
 "use client"
-
 import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';

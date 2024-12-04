@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
     await connect();
     try {
-        const { email, name, bookingStatus, businessList, date, phone, address, houseNo, } = await request.json();
-        const newBooking = new Booking({ email, name, bookingStatus, businessList, date, phone, address, houseNo, });
+        const { email, name, bookingStatus, businessList, date, phone, address, houseNo, orderId, amount } = await request.json();
+        const newBooking = new Booking({ email, name, bookingStatus, businessList, date, phone, address, houseNo, orderId, amount });
         await newBooking.save()
         return NextResponse.json({
             message: "Booking created successfully",

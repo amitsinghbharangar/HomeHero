@@ -1,21 +1,10 @@
-import { Calendar, Clock, MapPin, User } from "lucide-react";
-import { toast } from "sonner";
+import { Calendar, MapPin, User, IndianRupee, PackageSearch } from "lucide-react";
+import moment from "moment";
+// import { toast } from "sonner";
 import React from "react";
 
 function BookingHistoryList({ bookingHistory }) {
-    console.log(bookingHistory)
-    // const cancelAppointment = (booking) => {
-    //     GlobalApi.deleteBooking(booking.id).then(
-    //         (resp) => {
-    //             if (resp) {
-    //                 toast("Booking Deleted Successfully!");
-    //             }
-    //         },
-    //         (e) => {
-    //             toast("Error while canceling booking!");
-    //         }
-    //     );
-    // };
+    // console.log(bookingHistory)
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -41,7 +30,15 @@ function BookingHistoryList({ bookingHistory }) {
                             </h2>
                             <h2 className="flex gap-2 text-gray-500">
                                 <Calendar className="text-primary" />
-                                Service on: <span className="text-black">{booking.date}</span>
+                                Service on: <span className="text-black">{moment(booking.date).format('DD/MM/YYYY')}</span>
+                            </h2>
+                            <h2 className="flex gap-2 text-gray-500">
+                                <IndianRupee className="text-primary" />
+                                Booking Amount: <span className="text-black">{booking.amount}</span>
+                            </h2>
+                            <h2 className="flex gap-2 text-gray-500">
+                                <PackageSearch className="text-primary" />
+                                Order Id: <span className="text-black">{booking.orderId}</span>
                             </h2>
 
                         </div>

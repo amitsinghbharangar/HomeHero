@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useSession } from 'next-auth/react';
+import handlePayment from "@/lib/payment"
 import {
     Sheet,
     SheetClose,
@@ -26,68 +27,30 @@ function BookingSection({ children, business }) {
 
     const [formData, setFormData] = useState({
         name: "",
-
         phone: "",
         address: "",
         houseNo: "",
     });
-    const [selectedTime, setSelectedTime] = useState();
+    const [orderId, setOrderId] = useState()
+
     const { data } = useSession();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-
-
-    // useEffect(() => {
-    //     date && BusinessBookedSlot();
-    // }, [date])
-
-    /**
-     * Get Selected Date Business Booked Slot
-     */
-    // const BusinessBookedSlot = () => {
-    //     GlobalApi.BusinessBookedSlot(business.id, moment(date).format('DD-MMM-yyyy'))
-    //         .then(resp => {
-    //             console.log(resp)
-    //             setBookedSlot(resp.bookings)
-    //         })
-    // }
-
-    const saveBooking = async () => {
+    const payment = async () => {
         const bookingData = {
-            ...formData, date: moment(date).format('DD-MMM-yyyy'), selectedTime, businessList: business._id, email: data.user.email
+            ...formData, date: moment(date).format('DD-MMM-yyyy'), businessList: business._id, email: data.user.email, amount: business.bookingAmount
         };
         try {
-            console.log(bookingData);
-            const response = await fetch("/api/createBooking", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(bookingData),
-            });
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+            const res = await handlePayment(bookingData);
+
+            if (!res.isOk) {
+                throw new Error("Payment failed or no order ID returned");
             }
-            console.log("service booked successfully")
-            toast({
-                title: "Service booked successfully.",
-                description: "You will be redirected to the dashboard.",
-            });
-            setFormData({
-                name: "",
-                phone: "",
-                address: "",
-                houseNo: "",
-            });
-
-            setDate();
-            setSelectedTime('');
-
+            // console.log("Payment successful, order ID:", order.id);
         } catch (error) {
-            console.error("Booking Failed:", error);
+            console.error("Payment Failed:", error);
 
             toast({
                 variant: "destructive",
@@ -97,6 +60,9 @@ function BookingSection({ children, business }) {
             });
         }
     }
+
+
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -181,20 +147,20 @@ function BookingSection({ children, business }) {
                         />
                     </div>
                 </form>
+                <div className='flex gap-5 mt-5'>
+                    <Button variant="destructive"
+                        className="">Cancel</Button>
 
+                    <Button
+                        disabled={!(formData.name && formData.address && formData.houseNo && formData.phone && date)}
+                        onClick={() => payment()}
+                    >
+                        Pay and book</Button>
+                </div>
 
                 <SheetFooter className="mt-5">
                     <SheetClose asChild>
-                        <div className='flex gap-5'>
-                            <Button variant="destructive"
-                                className="">Cancel</Button>
 
-                            <Button
-                                disabled={!({ ...formData } && date)}
-                                onClick={() => saveBooking()}
-                            >
-                                Book</Button>
-                        </div>
 
                     </SheetClose>
                 </SheetFooter>

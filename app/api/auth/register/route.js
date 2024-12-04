@@ -9,26 +9,27 @@ export async function POST(request) {
         const { email, password } = await request.json();
 
         if (!email || !password) {
-            return new NextResponse({ message: "Missing Email or Password" });
+            return NextResponse.json({ message: "Email or password missing" }, { status: 400 });
         }
 
         const existedUser = await User.findOne({ email });
         if (existedUser) {
-            return new NextResponse({ message: "Email already exists" });
+            return NextResponse.json({ message: "Email already exists" }, { status: 400 });
         }
 
         const hashedPassword = await hash(password, 10);
 
         const newUser = new User({ email, password: hashedPassword });
         await newUser.save();
-        return new NextResponse.json({
-            message: "User register successfully",
-        });
+        return NextResponse.json({ messsage: 'user registered successfully' }, { status: 200 })
     } catch (e) {
-        console.log({ e });
-        return NextResponse.json({
-            success: false,
-            message: "Error registering user",
-        });
+        console.error("Error during user registration:", e);
+
+        if (e.code === 11000) { // Handle duplicate key error
+            return NextResponse.json({ message: "Email already exists" }, { status: 400 });
+        }
+
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
+
 }

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> dd26452 (project completed)
 
 import Hero from "./_components/Hero";
 import CategoryList from "./_components/CategoryList";
@@ -14,10 +10,6 @@ export default async function Home() {
   const categoryList = await Slider.find({}).lean();
   const businessList = await Businesslist.find({}).lean()
   return (
-<<<<<<< HEAD
-    <div>
-      </div>
-=======
 
     <div className="grid justify-items-center min-h-screen p-4  gap-6 sm:p-3 font-[family-name:var(--font-geist-sans)]">
 
@@ -27,6 +19,5 @@ export default async function Home() {
         title={'Popular Business'} />
     </div>
 
->>>>>>> dd26452 (project completed)
   );
 }
