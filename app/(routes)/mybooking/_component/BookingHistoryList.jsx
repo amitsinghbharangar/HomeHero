@@ -12,8 +12,7 @@ function BookingHistoryList({ bookingHistory }) {
                 <div key={index} className="border rounded-xl p-4 mb-5">
                     <div className="flex gap-4">
                         {booking?.businessList?.name && (
-                            <img
-                                src="https://images.pexels.com/photos/7515082/pexels-photo-7515082.jpeg?auto=compress&cs=tinysrgb&w=600"
+                            <Image src={business?.images[0].url}
                                 alt="image"
                                 width={120}
                                 height={120}

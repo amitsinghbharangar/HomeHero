@@ -1,6 +1,6 @@
 
 import { Button } from '@/components/ui/button'
-import { NotebookPen } from 'lucide-react'
+import { IndianRupee, NotebookPen } from 'lucide-react'
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
@@ -20,7 +20,6 @@ function SuggestedBusinessList({ business }) {
         try {
             const res = await fetch(`/api/businessbycategory?category=${data.category.name}`);
             const result = await res.json();
-            console.log(result.data)
             setBusinessList(result.data || []);
         } catch (error) {
             console.error('Failed to fetch business list:', error);
@@ -49,7 +48,7 @@ function SuggestedBusinessList({ business }) {
           hover:border rounded-xl 
           cursor-pointer hover:shadow-md
            border-purple-800">
-                            <img src='https://images.pexels.com/photos/7515082/pexels-photo-7515082.jpeg?auto=compress&cs=tinysrgb&w=600'
+                            <img src='https://images.pexels.com/photos/29482576/pexels-photo-29482576/free-photo-of-vibrant-rainbow-lorikeets-perched-on-tree-branch.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
                                 alt={business.name}
                                 width={80}
                                 height={80}
@@ -58,7 +57,7 @@ function SuggestedBusinessList({ business }) {
                             <div className=''>
                                 <h2 className='font-bold'>{business.name}</h2>
                                 <h2 className='text-purple-800'>{business.contactPerson}</h2>
-                                <h2 className='text-gray-400'>{business.address}</h2>
+                                <h2 className='text-gray-400'><IndianRupee /> Booking Amount : {business.bookingAmount}</h2>
 
                             </div>
                         </Link>

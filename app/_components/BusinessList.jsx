@@ -16,7 +16,7 @@ function BusinessList({ businessList, title }) {
                 rounded-xl hover:shadow-lg cursor-pointer
                  hover:shadow-purple-800
                  hover:scale-105 transition-all ease-in-out'>
-            <img src='https://images.pexels.com/photos/7515082/pexels-photo-7515082.jpeg?auto=compress&cs=tinysrgb&w=600'
+            <Image src={business?.images[0].url}
               alt={business.name}
               width={500}
               height={200}
@@ -30,7 +30,7 @@ function BusinessList({ businessList, title }) {
                          text-[12px]'>{business.category.name}</h2>
               <h2 className='font-bold text-lg'>{business.name}</h2>
               <h2 className='text-primary'>{business.contactPerson}</h2>
-              <h2 className='text-gray-500 text-sm'>{business.address}</h2>
+
               <h2 className='text-primary text-sm'>Booking Amount : {business.bookingAmount}</h2>
               <Button className="rounded-lg mt-3">Book Now</Button>
             </div>

@@ -7,7 +7,7 @@ function BusinessInfo({ business }) {
     const data = business?.[0];
     return data?.name && (
         <div className='md:flex gap-4 items-center'>
-            <img src='https://images.pexels.com/photos/7515082/pexels-photo-7515082.jpeg?auto=compress&cs=tinysrgb&w=600'
+            <img src='https://images.pexels.com/photos/29482576/pexels-photo-29482576/free-photo-of-vibrant-rainbow-lorikeets-perched-on-tree-branch.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
                 alt={data.name}
                 width={150}
                 height={200}
@@ -20,7 +20,7 @@ function BusinessInfo({ business }) {
         text-lg 
         bg-purple-100 rounded-full'>{data?.category?.name}</h2>
                     <h2 className='text-[40px] font-bold'>{data.name}</h2>
-                    <h2 className='flex gap-2 text-lg text-gray-500'><MapPin /> {data.address}</h2>
+
                     <h2 className='flex gap-2 text-lg text-gray-500'>
                         <Mail />
                         {data?.email}</h2>
