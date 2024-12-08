@@ -11,8 +11,8 @@ function BusinessDescription({ business }) {
             <h2 className='font-bold text-[25px] mt-8'>Gallary</h2>
             <div className='grid grid-cols-2 md:grid-cols-3
       lg:grid-cols-4 gap-5 mt-5'>
-                {data?.img?.map((item, index) => (
-                    <Image src={business?.images[0].url} key={index}
+                {data?.images?.map((item, index) => (
+                    <Image src={item?.url} key={index}
                         alt='image'
                         width={700}
                         height={200}

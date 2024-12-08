@@ -48,7 +48,7 @@ function SuggestedBusinessList({ business }) {
           hover:border rounded-xl 
           cursor-pointer hover:shadow-md
            border-purple-800">
-                            <img src='https://images.pexels.com/photos/29482576/pexels-photo-29482576/free-photo-of-vibrant-rainbow-lorikeets-perched-on-tree-branch.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
+                            <Image src={business?.images[0].url}
                                 alt={business.name}
                                 width={80}
                                 height={80}
@@ -57,7 +57,7 @@ function SuggestedBusinessList({ business }) {
                             <div className=''>
                                 <h2 className='font-bold'>{business.name}</h2>
                                 <h2 className='text-purple-800'>{business.contactPerson}</h2>
-                                <h2 className='text-gray-400'><IndianRupee /> Booking Amount : {business.bookingAmount}</h2>
+                                <h2 className='text-gray-400 flex'><IndianRupee />{business.bookingAmount}</h2>
 
                             </div>
                         </Link>

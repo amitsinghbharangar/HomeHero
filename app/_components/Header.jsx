@@ -1,6 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { getServerSession } from 'next-auth';
+
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
@@ -21,8 +21,7 @@ function Header() {
   return (
     <div className='p-3 shadow-sm flex  justify-between'>
       <div className='flex items-center gap-8 mx-8'>
-        <Image src='/logo.svg' alt='logo'
-          width={180} height={100} />
+        <div className='text-primary font-extrabold text-xl'>HomeHero</div>
         <div className='md:flex items-center
             gap-6 hidden
             '>

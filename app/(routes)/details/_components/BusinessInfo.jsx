@@ -7,7 +7,7 @@ function BusinessInfo({ business }) {
     const data = business?.[0];
     return data?.name && (
         <div className='md:flex gap-4 items-center'>
-            <img src='https://images.pexels.com/photos/29482576/pexels-photo-29482576/free-photo-of-vibrant-rainbow-lorikeets-perched-on-tree-branch.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
+            <Image src={data?.images[0].url}
                 alt={data.name}
                 width={150}
                 height={200}
